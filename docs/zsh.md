@@ -16,9 +16,16 @@ Files load in alphabetical order, so the numeric prefixes set the order.
 | Module | Purpose |
 |---|---|
 | `10-aliases.zsh` | General-purpose aliases |
-| `20-tools.zsh` | nvm and pyenv, each guarded so a missing tool doesn't break startup |
+| `20-tools.zsh` | nvm (lazy-loaded) and pyenv, each guarded so a missing tool doesn't break startup |
 | `30-plugins.zsh` | zsh-autosuggestions and zsh-syntax-highlighting from Homebrew. Highlighting loads last |
 | `90-prompt.zsh` | `starship init`. Last, so nothing re-initialises over it |
+
+## Startup time
+
+Eagerly sourcing nvm cost about 1s per shell (`nvm_auto` runs `nvm use` every time). The default node's
+`bin` goes straight on `PATH` and nvm loads on the first `nvm` call. Startup went from ~1.4s to ~0.4s.
+If the default alias isn't a plain version (such as `lts/*`), it falls back to eager loading.
+Profile with `zmodload zsh/zprof` at the top of `~/.zshrc` and `zprof` at the bottom.
 
 ## Why no oh-my-zsh
 
