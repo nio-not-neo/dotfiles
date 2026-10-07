@@ -20,10 +20,8 @@ macos-option-as-alt = left
 # herdr sessions persist across detach, so closing a window loses nothing.
 confirm-close-surface = false
 
-# Every new window/tab attaches to the persistent herdr session. (`initial-command` would only
-# cover the first surface after Ghostty launches.) If herdr fails to start, fall back to a login shell
-# instead of a window that closes instantly. herdr refuses to nest, so this can't double-launch.
-command = /bin/zsh -c "/opt/homebrew/bin/herdr || exec /bin/zsh -l"
+# herdr is launched from ~/.config/zsh/05-herdr.zsh (not Ghostty's command/initial-command, which only
+# apply at surface/app launch and were unreliable across reloads).
 
 # Don't bind ctrl+alt+<letter>/[ ]/,/./; here — those belong to herdr.
 # Ghostty's own super+t / super+d tabs and splits remain available but are redundant with herdr.

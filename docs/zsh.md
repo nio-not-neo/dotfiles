@@ -15,6 +15,7 @@ Files load in alphabetical order, so the numeric prefixes set the order.
 
 | Module | Purpose |
 |---|---|
+| `05-herdr.zsh` | Auto-attach to herdr in new Ghostty shells (see [ghostty-customization.md](ghostty-customization.md)) |
 | `10-aliases.zsh` | General-purpose aliases |
 | `20-tools.zsh` | nvm (lazy-loaded) and pyenv, each guarded so a missing tool doesn't break startup |
 | `30-plugins.zsh` | zsh-autosuggestions and zsh-syntax-highlighting from Homebrew. Highlighting loads last |

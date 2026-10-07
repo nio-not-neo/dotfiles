@@ -8,7 +8,7 @@ iTerm2 and Warp (see `archive/`).
 | `font-family = "Hack Nerd Font"` | Your iTerm2 font. Matches the Nerd Font icons in the starship config |
 | `keybind = shift+enter=text:\n` | Newline without submitting, for multi-line input in Claude Code and the shell |
 | `notify-on-command-finish = unfocused`, `after = 30s` | Ordinary long commands (builds, tests). herdr covers agent notifications |
-| `command = /bin/zsh -c "herdr \|\| exec zsh -l"` | Every new window/tab attaches to the herdr session. Replaced `initial-command`, which only applies to the first surface after Ghostty launches. Falls back to zsh if herdr fails |
+| `~/.config/zsh/05-herdr.zsh` (zsh module, not Ghostty) | Attaches to the herdr session in every new interactive shell inside Ghostty. Ghostty's `command`/`initial-command` only apply at surface/app launch and didn't take effect on new windows after a config reload. Skips inside herdr, outside Ghostty, when herdr is missing, or with `NO_HERDR=1` |
 | `config-file = ?pokemon.ghostty` | Optional per-machine Pokemon background (below) |
 
 ## Pokemon background
