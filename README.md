@@ -49,3 +49,4 @@ Then add a row to the table above and a `docs/<tool>.md` note.
 - [ ] zsh and oh-my-zsh (`.zshrc`, `.zprofile`), reviewed and scrubbed before import
 - [ ] starship prompt
 - [ ] mine `archive/` for iTerm2, Warp, kitty and fish settings worth bringing into Ghostty
+- [ ] revisit the 2024 checklist in `archive/README-2024-original.md` (micro, asdf, VS Code) and port `archive/bash/` ideas (aliases, PATH setup) to zsh
