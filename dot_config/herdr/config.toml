@@ -1,0 +1,40 @@
+onboarding = false
+
+[theme]
+name = "gruvbox"
+auto_switch = false
+
+[ui]
+agent_panel_sort = "priority"          # agents needing attention float to the top
+show_agent_labels_on_pane_borders = true
+confirm_close = true
+
+[ui.toast]
+delivery = "system"                    # macOS notification when an agent finishes / needs input
+
+# Keep prefix (ctrl+b) bindings as the discoverable fallback; add direct ctrl+alt chords.
+# Avoided: ctrl+alt+arrows (Ghostty/OS workspace switching).
+[keys]
+focus_pane_left  = ["prefix+h", "ctrl+alt+h"]
+focus_pane_down  = ["prefix+j", "ctrl+alt+j"]
+focus_pane_up    = ["prefix+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+last_pane        = ["prefix+;", "ctrl+alt+;"]
+zoom             = ["prefix+z", "ctrl+alt+z"]
+split_vertical   = ["prefix+v", "ctrl+alt+d"]
+split_horizontal = ["prefix+minus", "ctrl+alt+shift+d"]
+close_pane       = ["prefix+x", "ctrl+alt+w"]
+
+new_tab      = ["prefix+c", "ctrl+alt+c"]
+previous_tab = ["prefix+p", "ctrl+alt+["]
+next_tab     = ["prefix+n", "ctrl+alt+]"]
+
+# Agent management
+next_agent                = "ctrl+alt+."
+previous_agent            = "ctrl+alt+,"
+open_notification_target  = ["prefix+o", "ctrl+alt+o"]   # jump to the agent that needs you
+goto                      = ["prefix+g", "ctrl+alt+g"]   # session navigator / fuzzy jump
+
+[keys.indexed]
+agents     = "ctrl+alt"          # ctrl+alt+1..9 -> focus agent N
+workspaces = "ctrl+alt+shift"    # ctrl+alt+shift+1..9 -> workspace N

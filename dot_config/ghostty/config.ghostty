@@ -1,0 +1,17 @@
+# Ghostty config — herdr handles panes/tabs/sessions, so Ghostty stays a thin shell around it.
+
+theme = Gruvbox Dark
+font-size = 14
+
+# Left Option acts as Alt (shell word-nav, vim/emacs). Right Option still composes characters.
+macos-option-as-alt = left
+
+# herdr sessions persist across detach, so closing a window loses nothing.
+confirm-close-surface = false
+
+# Launch herdr in the first window/tab only; new windows stay plain shells.
+# (herdr refuses to nest, so this is also safe from accidental double-launch.)
+initial-command = /opt/homebrew/bin/herdr
+
+# Don't bind ctrl+alt+<letter>/[ ]/,/./; here — those belong to herdr.
+# Ghostty's own super+t / super+d tabs and splits remain available but are redundant with herdr.
