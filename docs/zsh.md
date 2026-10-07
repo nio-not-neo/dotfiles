@@ -18,6 +18,7 @@ Files load in alphabetical order, so the numeric prefixes set the order.
 | `10-aliases.zsh` | General-purpose aliases |
 | `20-tools.zsh` | nvm (lazy-loaded) and pyenv, each guarded so a missing tool doesn't break startup |
 | `30-plugins.zsh` | zsh-autosuggestions and zsh-syntax-highlighting from Homebrew. Highlighting loads last |
+| `85-pokeball.zsh` | Picks a random Pokeball before each prompt (see below) |
 | `90-prompt.zsh` | `starship init`. Last, so nothing re-initialises over it |
 
 ## Startup time
@@ -48,8 +49,24 @@ The prompt line is ordered path, worktree, branch, detached commit and tag, in-p
   linked `git worktree` (when `git rev-parse --git-dir` differs from `--git-common-dir`). Plain clones stay clean.
   Costs two quick `git` calls per prompt.
 - **Line deltas:** `git_metrics` shows `+added -deleted` for the working tree.
+- The worktree marker shows the repo the worktree belongs to (`🌳 main-repo`), since the directory module already
+  shows the worktree folder.
 - Test changes with `starship prompt --path <dir>`. Use `starship print-config` to validate: bare
   `starship config` opens an editor and hangs.
+
+## Two-line layout and the Pokeball
+
+Line 1 is the path plus git details. Line 2 is `╰─`, the clock, a ball and the prompt character, so the arrow sits
+where you type. Starship excludes any module named explicitly in `format` from `$all`, which is how line 2 stays on
+line 2.
+
+The ball changes on every prompt. No Unicode emoji exists for a Pokeball, so this uses the Nerd Font glyph
+`U+F041D`: one shape, tinted per ball type (26 types, e.g. Great = blue, Ultra = yellow, Dusk = dark green).
+A `precmd` hook in `85-pokeball.zsh` exports exactly one `STARSHIP_BALL_<NAME>`, and starship has one `env_var`
+module per ball. This spawns no extra processes. `ball` prints the current type, `ball list` prints all of them.
+
+Limit: a single-colour glyph can't be two-tone like the Gen 3 sprites. True sprites would need inline images
+(Ghostty supports the kitty graphics protocol) and artwork we'd have to fetch per machine.
 
 ## Bootstrap
 

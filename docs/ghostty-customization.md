@@ -19,7 +19,7 @@ iTerm2/Kitty-style background APIs, so `pokemon -n deoxys` does nothing here. In
 stays readable. The image and generated snippet are **not tracked**: the artwork isn't ours to redistribute.
 
 ```sh
-scripts/pokemon-bg.sh deoxys      # default; also: attack | defense | speed | blaziken | <dex 1-719> | off
+scripts/pokemon-bg.sh blaziken    # default; also: deoxys | attack | defense | speed | <dex 1-719> | off
 ```
 
 Reload with `cmd+shift+,`. The art set covers Gen I-VI only, so Gen VII+ (e.g. Ceruledge, #937) has no image.

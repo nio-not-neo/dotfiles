@@ -5,7 +5,7 @@
 # its artwork and uses Ghostty's native `background-image`. The image is downloaded per machine and
 # deliberately not committed (Pokemon artwork isn't ours to redistribute from a public repo).
 #
-# Usage: scripts/pokemon-bg.sh [deoxys|attack|defense|speed|blaziken|<dex number 1-719>|off]
+# Usage: scripts/pokemon-bg.sh [blaziken|deoxys|attack|defense|speed|<dex number 1-719>|off]
 # The artwork set covers Gen I-VI (#1-719), so newer Pokemon (e.g. Ceruledge, #937) have no image.
 set -euo pipefail
 
@@ -13,7 +13,7 @@ REPO="LazoVelko/Pokemon-Terminal"
 REF="0fb9b07df35c4757ce3abc6304cfe7b9b3d3e1a5"   # pinned commit
 DIR="$HOME/.config/ghostty"
 SNIPPET="$DIR/pokemon.ghostty"                    # loaded by `config-file = ?pokemon.ghostty`
-FORM="${1:-deoxys}"
+FORM="${1:-blaziken}"
 
 # Dex number -> generation folder
 gen_dir() {

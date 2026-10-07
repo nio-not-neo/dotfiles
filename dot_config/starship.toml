@@ -1,9 +1,16 @@
-# Git-first layout: path, then worktree, branch, commit (if detached), in-progress state,
-# line deltas and file status. $all keeps every other module; anything named above isn't repeated.
+# Two-line layout. Line 1: path, worktree, branch, commit (if detached), in-progress state, line deltas,
+# file status, then every other module ($all). Line 2: arrow, clock, a random Pokeball, prompt character.
+# The ball is picked per prompt by ~/.config/zsh/85-pokeball.zsh, which exports exactly one
+# STARSHIP_BALL_<NAME>; only the matching env_var module renders. Modules named explicitly here are
+# excluded from $all, which is how line 2 stays on line 2.
 format = """
-$username$hostname$directory\
+[╭─](dimmed white) $username$hostname$directory\
 ${custom.git_worktree}$git_branch$git_commit$git_state$git_metrics$git_status\
-$all"""
+$all\
+$line_break\
+[╰─](dimmed white) $jobs$battery$time$status\
+${env_var.ball_poke}${env_var.ball_great}${env_var.ball_ultra}${env_var.ball_master}${env_var.ball_premier}${env_var.ball_luxury}${env_var.ball_dusk}${env_var.ball_heavy}${env_var.ball_level}${env_var.ball_lure}${env_var.ball_moon}${env_var.ball_friend}${env_var.ball_love}${env_var.ball_fast}${env_var.ball_timer}${env_var.ball_repeat}${env_var.ball_net}${env_var.ball_nest}${env_var.ball_dive}${env_var.ball_quick}${env_var.ball_safari}${env_var.ball_sport}${env_var.ball_cherish}${env_var.ball_park}${env_var.ball_heal}${env_var.ball_dream}\
+$character"""
 
 [battery]
 full_symbol = "🔋"
@@ -15,6 +22,7 @@ threshold = 30
 style = "bold red"
 
 [character]
+success_symbol = "[❯](bold green)"
 error_symbol = "[✖](bold red) "
 
 [cmd_duration]
@@ -40,12 +48,13 @@ style = "bold white"
 disabled = false          # +added / -deleted lines in the working tree
 format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
 
-# Linked-worktree name. Starship has no worktree module. Shows only when this checkout is a
+# Linked-worktree marker, showing the repo the worktree belongs to (the directory module already shows the
+# worktree folder). Starship has no worktree module. Shows only when this checkout is a
 # `git worktree` (git dir differs from the common dir), so plain clones stay uncluttered.
 [custom.git_worktree]
 description = "Name of the current linked git worktree"
 when = '[ "$(git rev-parse --git-dir 2>/dev/null)" != "$(git rev-parse --git-common-dir 2>/dev/null)" ]'
-command = 'basename "$(git rev-parse --show-toplevel)"'
+command = 'basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"'
 shell = ["bash", "--noprofile", "--norc"]
 symbol = "🌳 "
 format = " [$symbol$output]($style)"
@@ -254,3 +263,109 @@ symbol = " "
 
 [zig]
 symbol = " "
+
+# --- Pokeball variants (see 85-pokeball.zsh). One glyph, tinted per ball type. ---
+[env_var.ball_poke]
+variable = "STARSHIP_BALL_POKE"
+format = "[$env_value ](bold #e53935)"
+
+[env_var.ball_great]
+variable = "STARSHIP_BALL_GREAT"
+format = "[$env_value ](bold #1e88e5)"
+
+[env_var.ball_ultra]
+variable = "STARSHIP_BALL_ULTRA"
+format = "[$env_value ](bold #fdd835)"
+
+[env_var.ball_master]
+variable = "STARSHIP_BALL_MASTER"
+format = "[$env_value ](bold #8e24aa)"
+
+[env_var.ball_premier]
+variable = "STARSHIP_BALL_PREMIER"
+format = "[$env_value ](bold #f5f5f5)"
+
+[env_var.ball_luxury]
+variable = "STARSHIP_BALL_LUXURY"
+format = "[$env_value ](bold #8a8a8a)"
+
+[env_var.ball_dusk]
+variable = "STARSHIP_BALL_DUSK"
+format = "[$env_value ](bold #2e7d32)"
+
+[env_var.ball_heavy]
+variable = "STARSHIP_BALL_HEAVY"
+format = "[$env_value ](bold #546e7a)"
+
+[env_var.ball_level]
+variable = "STARSHIP_BALL_LEVEL"
+format = "[$env_value ](bold #ef6c00)"
+
+[env_var.ball_lure]
+variable = "STARSHIP_BALL_LURE"
+format = "[$env_value ](bold #00acc1)"
+
+[env_var.ball_moon]
+variable = "STARSHIP_BALL_MOON"
+format = "[$env_value ](bold #3949ab)"
+
+[env_var.ball_friend]
+variable = "STARSHIP_BALL_FRIEND"
+format = "[$env_value ](bold #43a047)"
+
+[env_var.ball_love]
+variable = "STARSHIP_BALL_LOVE"
+format = "[$env_value ](bold #f06292)"
+
+[env_var.ball_fast]
+variable = "STARSHIP_BALL_FAST"
+format = "[$env_value ](bold #ffca28)"
+
+[env_var.ball_timer]
+variable = "STARSHIP_BALL_TIMER"
+format = "[$env_value ](bold #c62828)"
+
+[env_var.ball_repeat]
+variable = "STARSHIP_BALL_REPEAT"
+format = "[$env_value ](bold #ff7043)"
+
+[env_var.ball_net]
+variable = "STARSHIP_BALL_NET"
+format = "[$env_value ](bold #26a69a)"
+
+[env_var.ball_nest]
+variable = "STARSHIP_BALL_NEST"
+format = "[$env_value ](bold #9ccc65)"
+
+[env_var.ball_dive]
+variable = "STARSHIP_BALL_DIVE"
+format = "[$env_value ](bold #0277bd)"
+
+[env_var.ball_quick]
+variable = "STARSHIP_BALL_QUICK"
+format = "[$env_value ](bold #29b6f6)"
+
+[env_var.ball_safari]
+variable = "STARSHIP_BALL_SAFARI"
+format = "[$env_value ](bold #8d6e63)"
+
+[env_var.ball_sport]
+variable = "STARSHIP_BALL_SPORT"
+format = "[$env_value ](bold #ff8f00)"
+
+[env_var.ball_cherish]
+variable = "STARSHIP_BALL_CHERISH"
+format = "[$env_value ](bold #d50000)"
+
+[env_var.ball_park]
+variable = "STARSHIP_BALL_PARK"
+format = "[$env_value ](bold #aed581)"
+
+[env_var.ball_heal]
+variable = "STARSHIP_BALL_HEAL"
+format = "[$env_value ](bold #ff80ab)"
+
+[env_var.ball_dream]
+variable = "STARSHIP_BALL_DREAM"
+format = "[$env_value ](bold #7e57c2)"
+
