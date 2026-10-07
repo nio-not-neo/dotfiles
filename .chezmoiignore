@@ -2,6 +2,7 @@
 README.md
 docs
 archive
+scripts
 
 # Platform gates, e.g.:
 # {{ if ne .chezmoi.os "darwin" }}

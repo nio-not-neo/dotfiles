@@ -18,13 +18,14 @@ chezmoi maps this repo onto `$HOME`: `dot_config/foo` becomes `~/.config/foo`.
 | `dot_config/<tool>/` | Active, applied config for each tool |
 | `docs/<tool>.md` | Why it's set up that way, keybinds, caveats, learning notes |
 | `archive/<tool>/` | Not applied. Settings and ideas from tools I've moved on from (iTerm2, Warp, kitty, fish) to mine for migration |
+| `scripts/` | Helpers that aren't applied to `$HOME` (e.g. `pokemon-bg.sh`) |
 | `.chezmoiignore` | Files that shouldn't be applied on every machine or OS |
 
 ## Tools
 
 | Tool | Config | Notes |
 |---|---|---|
-| [Ghostty](https://ghostty.org) | `dot_config/ghostty/` | Terminal emulator |
+| [Ghostty](https://ghostty.org) | `dot_config/ghostty/` | Terminal emulator. See [docs/ghostty-customization.md](docs/ghostty-customization.md) |
 | [herdr](https://herdr.dev) | `dot_config/herdr/` | Workspace/agent manager. See [docs/ghostty-herdr.md](docs/ghostty-herdr.md) |
 | zsh | `dot_config/zsh/` | Modular config sourced from a local `~/.zshrc`. See [docs/zsh.md](docs/zsh.md) |
 | [Starship](https://starship.rs) | `dot_config/starship.toml` | Prompt |
@@ -48,5 +49,4 @@ Then add a row to the table above and a `docs/<tool>.md` note.
 
 ## Planned
 
-- [ ] mine `archive/` for iTerm2, Warp, kitty and fish settings worth bringing into Ghostty
 - [ ] revisit the 2024 checklist in `archive/README-2024-original.md` (micro, asdf, VS Code) and port `archive/bash/` ideas (aliases, PATH setup) to zsh

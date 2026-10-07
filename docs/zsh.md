@@ -39,6 +39,18 @@ it as another numbered module.
 Ghostty bundles Nerd Font symbols, so they render without installing a font.
 The custom parts: command duration over 10s, git status emoji, memory usage over 70%, a clock.
 
+## Git-aware prompt
+
+The prompt line is ordered path, worktree, branch, detached commit and tag, in-progress state
+(rebase/merge), line deltas, then file status (modified, staged, untracked, stashed, ahead/behind).
+
+- **Worktree:** starship has no worktree module, so `[custom.git_worktree]` shows `🌳 name` only inside a
+  linked `git worktree` (when `git rev-parse --git-dir` differs from `--git-common-dir`). Plain clones stay clean.
+  Costs two quick `git` calls per prompt.
+- **Line deltas:** `git_metrics` shows `+added -deleted` for the working tree.
+- Test changes with `starship prompt --path <dir>`. Use `starship print-config` to validate: bare
+  `starship config` opens an editor and hangs.
+
 ## Bootstrap
 
 ```sh

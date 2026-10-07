@@ -1,7 +1,18 @@
 # Ghostty config — herdr handles panes/tabs/sessions, so Ghostty stays a thin shell around it.
 
 theme = Gruvbox Dark
+font-family = "Hack Nerd Font"
 font-size = 14
+
+# Shift+Enter inserts a newline instead of submitting (multi-line input in Claude Code / shell).
+# Carried over from iTerm2.
+keybind = shift+enter=text:\n
+
+# Notify when a command finishes in an unfocused window after 30s (Warp's long-running threshold).
+# herdr handles agent notifications; this covers ordinary long commands (builds, tests, installs).
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = notify
+notify-on-command-finish-after = 30s
 
 # Left Option acts as Alt (shell word-nav, vim/emacs). Right Option still composes characters.
 macos-option-as-alt = left
@@ -15,3 +26,6 @@ initial-command = /opt/homebrew/bin/herdr
 
 # Don't bind ctrl+alt+<letter>/[ ]/,/./; here — those belong to herdr.
 # Ghostty's own super+t / super+d tabs and splits remain available but are redundant with herdr.
+
+# Optional Pokemon background, generated per machine by scripts/pokemon-bg.sh in the dotfiles repo.
+config-file = ?pokemon.ghostty

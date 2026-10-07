@@ -1,3 +1,10 @@
+# Git-first layout: path, then worktree, branch, commit (if detached), in-progress state,
+# line deltas and file status. $all keeps every other module; anything named above isn't repeated.
+format = """
+$username$hostname$directory\
+${custom.git_worktree}$git_branch$git_commit$git_state$git_metrics$git_status\
+$all"""
+
 [battery]
 full_symbol = "🔋"
 charging_symbol = "🔌"
@@ -26,7 +33,23 @@ style = "bold yellow"
 
 [git_commit]
 commit_hash_length = 8
+tag_disabled = false      # also show the tag when HEAD sits on one
 style = "bold white"
+
+[git_metrics]
+disabled = false          # +added / -deleted lines in the working tree
+format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+
+# Linked-worktree name. Starship has no worktree module. Shows only when this checkout is a
+# `git worktree` (git dir differs from the common dir), so plain clones stay uncluttered.
+[custom.git_worktree]
+description = "Name of the current linked git worktree"
+when = '[ "$(git rev-parse --git-dir 2>/dev/null)" != "$(git rev-parse --git-common-dir 2>/dev/null)" ]'
+command = 'basename "$(git rev-parse --show-toplevel)"'
+shell = ["bash", "--noprofile", "--norc"]
+symbol = "🌳 "
+format = " [$symbol$output]($style)"
+style = "bold green"
 
 [git_state]
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
