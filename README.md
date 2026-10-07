@@ -26,6 +26,8 @@ chezmoi maps this repo onto `$HOME`: `dot_config/foo` becomes `~/.config/foo`.
 |---|---|---|
 | [Ghostty](https://ghostty.org) | `dot_config/ghostty/` | Terminal emulator |
 | [herdr](https://herdr.dev) | `dot_config/herdr/` | Workspace/agent manager. See [docs/ghostty-herdr.md](docs/ghostty-herdr.md) |
+| zsh | `dot_config/zsh/` | Modular config sourced from a local `~/.zshrc`. See [docs/zsh.md](docs/zsh.md) |
+| [Starship](https://starship.rs) | `dot_config/starship.toml` | Prompt |
 
 ## Adding a new tool
 
@@ -46,7 +48,5 @@ Then add a row to the table above and a `docs/<tool>.md` note.
 
 ## Planned
 
-- [ ] zsh and oh-my-zsh (`.zshrc`, `.zprofile`), reviewed and scrubbed before import
-- [ ] starship prompt
 - [ ] mine `archive/` for iTerm2, Warp, kitty and fish settings worth bringing into Ghostty
 - [ ] revisit the 2024 checklist in `archive/README-2024-original.md` (micro, asdf, VS Code) and port `archive/bash/` ideas (aliases, PATH setup) to zsh
