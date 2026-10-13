@@ -22,7 +22,9 @@ _pokeball_precmd() {
     export "STARSHIP_BALL_${(U)b}"='@@BALL@@'
   else
     typeset -g _POKEBALL_SEQ=
-    export "STARSHIP_BALL_${(U)b}"="${POKEBALL_GLYPH:-$'\U000f041d'}"
+    # $'...' is not expanded inside a double-quoted ${...:-...}, so build the glyph first.
+    local glyph=$'\U000f041d'
+    export "STARSHIP_BALL_${(U)b}"="${POKEBALL_GLYPH:-$glyph}"
   fi
 }
 
