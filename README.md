@@ -18,6 +18,7 @@ chezmoi maps this repo onto `$HOME`: `dot_config/foo` becomes `~/.config/foo`.
 | `dot_config/<tool>/` | Active, applied config for each tool |
 | `docs/<tool>.md` | Why it's set up that way, keybinds, caveats, learning notes |
 | `archive/<tool>/` | Not applied. Settings and ideas from tools I've moved on from (iTerm2, Warp, kitty, fish) to mine for migration |
+| `AGENTS.md`, `docs/remote-workspaces.md` | Rules for agents, and how (and how little) to carry this onto remote workspaces |
 | `scripts/` | Helpers that aren't applied to `$HOME` (e.g. `pokemon-bg.sh`, `pokeball-sprites.sh`) |
 | `.chezmoiignore` | Files that shouldn't be applied on every machine or OS |
 

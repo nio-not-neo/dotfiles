@@ -1,5 +1,6 @@
 # Repo-only files: not applied to $HOME
 README.md
+AGENTS.md
 docs
 archive
 scripts

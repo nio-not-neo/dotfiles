@@ -4,7 +4,7 @@
 # STARSHIP_BALL_<NAME>; only the matching env_var module renders. Modules named explicitly here are
 # excluded from $all, which is how line 2 stays on line 2.
 format = """
-[╭─](dimmed white) $username$hostname$directory\
+[╭─](dimmed white) ${env_var.workspace_name}$username$hostname$directory\
 ${custom.git_worktree}$git_branch$git_commit$git_state$git_metrics$git_status\
 $all\
 $line_break\
@@ -369,3 +369,7 @@ format = "[$env_value ](bold #ff80ab)"
 variable = "STARSHIP_BALL_DREAM"
 format = "[$env_value ](bold #7e57c2)"
 
+# Remote workspaces export their name; show it first (the stock remote prompt did). Hidden where unset.
+[env_var.workspace_name]
+variable = "WORKSPACE_NAME"
+format = "[$env_value](bold green) "
