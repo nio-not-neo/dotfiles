@@ -5,6 +5,20 @@ docs
 archive
 scripts
 
+# Remote profile = default-deny. Only the prompt is applied; anything added to the repo later stays off remotes
+# until it is explicitly allowed here. Set per machine (untracked) in ~/.config/chezmoi/chezmoi.toml:
+#   [data]
+#   profile = "remote"
+# See docs/remote-workspaces.md.
+{{ if eq (get . "profile") "remote" }}
+.config/*
+!.config/starship.toml
+!.config/zsh
+.config/zsh/*
+!.config/zsh/85-pokeball.zsh
+!.config/zsh/90-prompt.zsh
+{{ end }}
+
 # Platform gates, e.g.:
 # {{ if ne .chezmoi.os "darwin" }}
 # .config/ghostty

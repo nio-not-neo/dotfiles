@@ -20,9 +20,14 @@ The remote is not a second home for this config. It's a **read-only consumer** o
 |---|---|
 | `dot_config/starship.toml` (prompt) | Ghostty config (runs on the laptop, not the remote) |
 | `dot_config/zsh/90-prompt.zsh` | herdr config and `05-herdr.zsh` |
-| Optionally `10-aliases.zsh` | Pokemon background, sprites, `scripts/` |
-| | `20-tools.zsh` (remote has its own version managers), `30-plugins.zsh` (Homebrew paths) |
+| `dot_config/zsh/85-pokeball.zsh` (glyph ball; no sprites remotely) | Pokemon background, sprites, `scripts/` |
+| | `10-aliases.zsh`, `20-tools.zsh` (remote has its own version managers), `30-plugins.zsh` (Homebrew paths) |
 | | Anything under `archive/` |
+
+This is enforced, not just documented: `.chezmoiignore` is **default-deny** for the `remote` profile, so a new
+tool added to the repo later stays off remotes until it is explicitly allowed there. Test any change with
+`chezmoi managed --config <remote.toml> --destination <tmpdir>`. Note `.config/**` is the wrong pattern (it also
+matches `.config` itself and ignores everything); use single-level `.config/*` plus `!` exceptions.
 
 The terminal (Ghostty, fonts, images) always runs on the laptop, so Nerd Font glyphs render remotely without
 installing anything there. The Pokeball falls back to the tinted glyph, because the sprite files are per machine.
@@ -54,8 +59,13 @@ remote: bootstrap (once)  -> install chezmoi + starship to ~/.local/bin
         on every start    -> chezmoi update   (timeout, fail soft)
 ```
 
-A per-machine, **untracked** `~/.config/chezmoi/chezmoi.toml` on the remote selects a `remote` profile, and a
-templated `.chezmoiignore` excludes everything in the "never" column. The laptop keeps the default profile.
+A per-machine, **untracked** `~/.config/chezmoi/chezmoi.toml` on the remote sets `[data] profile = "remote"`, and the
+templated `.chezmoiignore` then applies only the allow-list above. The laptop keeps the default profile.
+
+Remote bootstrap conventions: pin tool versions and verify SHA-256 against pinned values; isolate git from the
+host's global config for the clone (`GIT_CONFIG_GLOBAL=/dev/null`, `GIT_TERMINAL_PROMPT=0`) so no employer
+identity or credential helper is involved; append the loader to `~/.zshrc` between marker comments so it is
+idempotent and trivially removable; always exit 0 and keep an opt-out file.
 
 ## Ask the user before
 
@@ -68,6 +78,10 @@ templated `.chezmoiignore` excludes everything in the "never" column. The laptop
 
 Append dated notes here as the setup teaches us something. Keep them generic.
 
+- 2026-10-13 (later): default-deny `remote` profile verified by dry run (laptop 10 files, remote 3, a simulated new
+  tool did not leak). The remote lacked the `xterm-ghostty` terminfo and had `~/.local/bin` off `PATH` in
+  non-login shells, so the loader exports `PATH` itself. Remote prompts may show a clock twice if the host's stock
+  config sets `RPROMPT`.
 - 2026-10-13: a remote workspace had a stock zsh config (not managed), a writable home, GitHub reachable,
   neither starship nor chezmoi installed, and no dotfiles repo configured. The host supports a dotfiles repo that
   is checked into `$HOME` as a bare repo with a hard reset on resume, which is why this repo's loader approach
