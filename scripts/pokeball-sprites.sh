@@ -31,9 +31,9 @@ for b in "${BALLS[@]}"; do
   # Must be a real PNG; refuse anything else before it reaches a terminal escape sequence.
   [[ "$(head -c 8 "$tmp/$b.png" | od -An -tx1 | tr -d ' \n')" == 89504e470d0a1a0a ]] \
     || { echo "  not a PNG: $b" >&2; fail=$((fail+1)); continue; }
-  # a=T transmit+display, f=100 PNG, c=2 two cells wide (height follows aspect ratio),
+  # a=T transmit+display, f=100 PNG, c=2,r=1 exactly two cells wide by one row (without r, the height is guessed and stretched),
   # C=1 don't move the cursor (the prompt prints two spaces under the image), q=2 suppress terminal replies.
-  printf '\033_Ga=T,f=100,c=2,C=1,q=2;%s\033\\' "$(base64 < "$tmp/$b.png" | tr -d '\n')" > "$OUT/$b.seq"
+  printf '\033_Ga=T,f=100,c=2,r=1,C=1,q=2;%s\033\\' "$(base64 < "$tmp/$b.png" | tr -d '\n')" > "$OUT/$b.seq"
 done
 echo "installed $(( ${#BALLS[@]} - fail ))/${#BALLS[@]} sprites in $OUT"
 [[ $fail -eq 0 ]] || exit 1

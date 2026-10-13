@@ -1,7 +1,7 @@
 # Ghostty config — herdr handles panes/tabs/sessions, so Ghostty stays a thin shell around it.
 
 theme = Gruvbox Dark
-font-family = "Hack Nerd Font"
+font-family = "Hack Nerd Font Mono"
 font-size = 14
 
 # Shift+Enter inserts a newline instead of submitting (multi-line input in Claude Code / shell).

@@ -92,6 +92,13 @@ How it works, and why it's built this way:
 Not the Gen 3 capture-animation art: no fetchable source of those exists, so these are the closest era-consistent
 icons. Swap files in `~/.local/share/pokeballs/<name>.seq` if you have artwork you prefer.
 
+### Sprite troubleshooting
+
+- The sprite is pinned to a 2x1 cell box (`c=2,r=1`). Without `r`, Ghostty guesses the height and the ball came out
+  stretched and sat low. If you regenerate with `scripts/pokeball-sprites.sh`, that is already included.
+- If it still looks off, compare outside herdr (herdr re-renders images with its own cell metrics):
+  `NO_HERDR=1 zsh`, then check again. Force the plain glyph with `POKEBALL_SPRITES=0`.
+
 ## Bootstrap
 
 ```sh

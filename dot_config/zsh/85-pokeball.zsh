@@ -22,7 +22,7 @@ _pokeball_precmd() {
     export "STARSHIP_BALL_${(U)b}"='@@BALL@@'
   else
     typeset -g _POKEBALL_SEQ=
-    export "STARSHIP_BALL_${(U)b}"=$'\U000f041d'
+    export "STARSHIP_BALL_${(U)b}"="${POKEBALL_GLYPH:-$'\U000f041d'}"
   fi
 }
 

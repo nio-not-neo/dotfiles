@@ -5,7 +5,7 @@ iTerm2 and Warp (see `archive/`).
 
 | Setting | Why |
 |---|---|
-| `font-family = "Hack Nerd Font"` | Your iTerm2 font. Matches the Nerd Font icons in the starship config |
+| `font-family = "Hack Nerd Font Mono"` | Your iTerm2 font, Mono variant: icons (Pokeball, git symbols) are normalized to one cell. The non-Mono variant stretched the ball vertically and misaligned its baseline |
 | `keybind = shift+enter=text:\n` | Newline without submitting, for multi-line input in Claude Code and the shell |
 | `notify-on-command-finish = unfocused`, `after = 30s` | Ordinary long commands (builds, tests). herdr covers agent notifications |
 | `~/.config/zsh/05-herdr.zsh` (zsh module, not Ghostty) | Attaches to the herdr session in every new interactive shell inside Ghostty. Ghostty's `command`/`initial-command` only apply at surface/app launch and didn't take effect on new windows after a config reload. Skips inside herdr, outside Ghostty, when herdr is missing, or with `NO_HERDR=1` |
