@@ -12,14 +12,17 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). The source di
 1. **Public repo: nothing employer-specific.** No internal hostnames, tool or command names, repo or workspace
    names, internal URLs, usernames of colleagues, or paths. If a note needs those, keep it in private notes
    outside the repo and write a generic version here.
-2. **No secrets.** Scan for tokens, keys and credentials before every commit.
-3. **Never overwrite files the host or an employer tool manages.** `~/.zshrc` and `~/.zprofile` stay local and
+2. **This repo is the sole source of truth.** Never create repos, hooks or config on employer-managed systems to
+   deliver these dotfiles, even where a documented mechanism exists. Remote setup is a script in this repo that the
+   user runs. If a design seems to need an employer-hosted artifact, stop and ask.
+3. **No secrets.** Scan for tokens, keys and credentials before every commit.
+4. **Never overwrite files the host or an employer tool manages.** `~/.zshrc` and `~/.zprofile` stay local and
    untracked; the repo ships modules in `~/.config/zsh/*.zsh` that a one-line loader sources.
-4. **Redistribution:** third-party artwork (Pokemon sprites and backgrounds) is fetched per machine by scripts,
+5. **Redistribution:** third-party artwork (Pokemon sprites and backgrounds) is fetched per machine by scripts,
    pinned to a commit, and never committed.
-5. **Confirm before outward-facing or hard-to-reverse actions:** `git push`, creating repos, running anything on
+6. **Confirm before outward-facing or hard-to-reverse actions:** `git push`, creating repos, running anything on
    a remote machine beyond read-only inspection. The user has approved pushes one at a time.
-6. **Keep customization shallow.** Prefer the smallest change. Don't deepen remote customization without asking.
+7. **Keep customization shallow.** Prefer the smallest change. Don't deepen remote customization without asking.
 
 ## Workflow
 

@@ -8,7 +8,12 @@ Written for humans and for agents doing the setup. Read [../AGENTS.md](../AGENTS
 The remote is not a second home for this config. It's a **read-only consumer** of the portable parts.
 
 - Changes flow one way: edit locally, push here, the remote pulls. Nothing is committed from a remote.
-- No personal credentials, personal git identity, or tokens go onto a remote.
+- **This repo is the only source of truth.** Nothing is created on, hosted by, or registered with the employer's
+  systems. If the host offers its own dotfiles hook (typically an employer-hosted repo that is cloned and
+  hard-reset into `$HOME`), it is deliberately left unused. That is a choice about ownership, not a technical
+  limit.
+- No personal credentials, personal git identity, or tokens go onto a remote. So the repo stays public and is
+  cloned anonymously over HTTPS; making it private would force a credential onto the remote.
 - Nothing from the employer's environment (hostnames, tool names, repo or workspace names, paths) comes back
   into this public repo. Employer-specific notes live in private notes outside the repo.
 - Customization depth stays shallow on purpose: the prompt and a few shell niceties, nothing that changes how
@@ -54,9 +59,11 @@ installing anything there. The Pokeball falls back to the tinted glyph, because 
 
 ```
 laptop: edit -> git push (this repo)
-remote: bootstrap (once)  -> install chezmoi + starship to ~/.local/bin
-                          -> chezmoi init --apply <this repo>   (profile = remote)
-        on every start    -> chezmoi update   (timeout, fail soft)
+        run scripts/remote-bootstrap.sh on the workspace, at the exact pushed commit
+remote: install chezmoi + starship to ~/.local/bin   (pinned versions, SHA-256 verified)
+        chezmoi init + guard + apply                 (profile = remote, allow-list enforced twice)
+        append a marked loader block to ~/.zshrc
+refresh: re-run the same script (idempotent). New workspaces need one run each; nothing runs automatically.
 ```
 
 A per-machine, **untracked** `~/.config/chezmoi/chezmoi.toml` on the remote sets `[data] profile = "remote"`, and the
@@ -74,6 +81,11 @@ idempotent and trivially removable; always exit 0 and keep an opt-out file.
 - adding any file to this repo that came from a remote or mentions employer systems;
 - expanding the "Apply" column.
 
+`scripts/remote-bootstrap.sh` enforces the allow-list itself (`ALLOWED_FILES`), independent of `.chezmoiignore`:
+if the repo would apply anything else, it refuses and applies nothing. When the allow-list changes, update both.
+Run it from the laptop with a small helper kept in the (untracked, work-specific) local `~/.zshrc` that executes
+the script at the pushed commit through an existing connection to the workspace.
+
 ## Log: what we've learned
 
 Append dated notes here as the setup teaches us something. Keep them generic.
@@ -86,3 +98,6 @@ Append dated notes here as the setup teaches us something. Keep them generic.
   neither starship nor chezmoi installed, and no dotfiles repo configured. The host supports a dotfiles repo that
   is checked into `$HOME` as a bare repo with a hard reset on resume, which is why this repo's loader approach
   avoids tracking `.zshrc`.
+- 2026-10-15: the first design put a thin bootstrap repo on the employer's git host so the host's hook would run it
+  on every start. Rejected: the goal is for this repo to be the only source of truth. The bootstrap script now lives
+  here and is run by hand, trading automatic setup of new workspaces for sole ownership.
