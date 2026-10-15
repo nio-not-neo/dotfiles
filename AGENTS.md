@@ -7,6 +7,8 @@ Guidance for AI agents working in this dotfiles repo. Humans: see [README.md](RE
 Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). The source dir is `~/.local/share/chezmoi`;
 `dot_config/foo` maps to `~/.config/foo`. The repo is **public**.
 
+Setting up a machine? Read [docs/setup-guide.md](docs/setup-guide.md) (Part 5 is written for you) after this file.
+
 ## Hard rules
 
 1. **Public repo: nothing employer-specific.** No internal hostnames, tool or command names, repo or workspace
@@ -43,7 +45,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). The source di
 | `dot_config/ghostty`, `dot_config/herdr` | Terminal and workspace manager |
 | `dot_config/zsh/*.zsh`, `dot_config/starship.toml` | Shell modules and prompt (two-line layout, Pokeball per prompt) |
 | `scripts/` | Per-machine helpers (backgrounds, sprites). Not applied to `$HOME` |
-| `docs/` | Per-tool notes. Start with `docs/remote-workspaces.md` for any remote work |
+| `docs/` | `setup-guide.md` (how to set up any machine), per-tool notes, `remote-workspaces.md` for prompt-only machines |
 | `archive/` | Not applied. Settings from retired tools |
 
 ## Gotchas already hit

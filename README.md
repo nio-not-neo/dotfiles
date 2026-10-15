@@ -2,6 +2,9 @@
 
 Personal configuration, managed with [chezmoi](https://www.chezmoi.io/). Built up over time as I learn and settle into tools.
 
+**New here, or an AI agent?** Start with [docs/setup-guide.md](docs/setup-guide.md): a manual path from a blank slate
+for any system, plus a section an agent can pick up from.
+
 ## Bootstrap a new machine
 
 ```sh
