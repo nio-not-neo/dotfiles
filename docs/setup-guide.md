@@ -3,6 +3,27 @@
 How to get these dotfiles running on a machine from a blank slate, by hand or with an AI agent. Written to work on
 any system: a personal laptop, a work laptop, or a machine you don't own. Nothing here depends on an employer.
 
+## Connecting other machines (both paths)
+
+Once the main machine is set up, one script walks any SSH-reachable machine through the rest, one y/N prompt per step,
+skipping what is already done:
+
+```sh
+scripts/remote-setup.sh <ssh-host> [--label <name>]          # add --check to only report status
+```
+
+1. **Prompt:** installs the prompt-only profile (Part 2) at the current `main` commit.
+2. **Agent hints (optional):** appends your own wrapper snippet to that machine's `~/.zshrc` as one marked block, so
+   herdr recognises agents started through a wrapper command. The snippet is a local, untracked file
+   (`~/.config/remote-setup/agent-hints.zsh`, or `$REMOTE_SETUP_HINTS`), so nothing machine- or employer-specific is ever
+   in this repo. No file, no step.
+3. **herdr machine:** runs `herdr machine add`, so that machine's agents appear in your local herdr window. Herdr asks
+   before installing itself there. Remote agents are only visible when they run in a pane of the *remote* herdr.
+
+It works for any host plain `ssh <ssh-host>` can reach: a home server, a cloud playground, a work machine behind its own
+connection tool (put that tool in your `~/.ssh/config` as a `ProxyCommand`, not in this repo). Run it from your main
+machine, and run it again after a machine is recreated.
+
 ## Choose your path
 
 - **Setting up by hand?** Read "Supported systems", then follow Part 1 (a full laptop) or Part 2 (a prompt-only machine).
@@ -53,13 +74,8 @@ cd "$(chezmoi source-path)"        # `chezmoi cd` opens a subshell, so don't cha
 scripts/pokeball-sprites.sh        # real Pokeball sprites in the prompt (else a tinted glyph)
 scripts/pokemon-bg.sh blaziken     # Ghostty background; also: deoxys | <dex 1-719> | off
 
-# 6. Optional: see agents running on other machines in the same herdr window
-herdr machine add <ssh-host> --label <name>   # asks before installing herdr on that machine
+# 6. Optional: other machines in the same herdr window: see "Connecting other machines" above
 ```
-
-Remote agents are only seen if they run in a pane of the *remote* herdr (not a plain ssh terminal), and a wrapper
-command needs `HERDR_AGENT=<engine>` set there too: see the troubleshooting table. Wrapper functions are
-machine-specific, so keep them in that machine's own untracked shell config (Part 3), never in this repo.
 
 Quit and reopen Ghostty (a config reload does not re-run the launch command). New windows attach to the herdr session.
 Check with `chezmoi verify` (silent means in sync), `starship print-config >/dev/null` (never bare `starship config`: it
@@ -171,7 +187,7 @@ the bottom of `docs/remote-workspaces.md`.
 | Symptom | Cause and fix |
 |---|---|
 | herdr lists some agents on a remote machine but not others | herdr only sees agents in panes of the remote herdr, and only recognises engines it knows by process name. A wrapper-launched engine needs `HERDR_AGENT=<engine>` set on that machine too (a function in its own `~/.zshrc`) |
-| herdr does not list an agent that runs through a wrapper command | herdr sees the wrapper as the foreground process. Launch it with `HERDR_AGENT=<engine>` set (for example in a shell function) |
+| herdr does not list an agent that runs through a wrapper command | herdr sees the wrapper as the foreground process. Launch it with `HERDR_AGENT=<engine>` set (for example in a shell function). `scripts/remote-setup.sh` can install that function on a remote machine from a local snippet |
 | herdr's sidebar shows `claude`, not the session name | Normal: it shows the agent type. The session name is the terminal title. Add a `terminal_title_stripped` row under `[ui.sidebar.agents.rows_by_agent]` |
 | herdr does not launch in a new window | `initial-command` covers only the first surface; this setup launches it from `05-herdr.zsh`. Skip it with `NO_HERDR=1 zsh` |
 | Pokeball stretched or sitting low | Sprites need an exact 2x1 cell box (`c=2,r=1`). Compare outside herdr with `NO_HERDR=1 zsh`; force the glyph with `POKEBALL_SPRITES=0` |

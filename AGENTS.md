@@ -54,3 +54,9 @@ Setting up a machine? Read [docs/setup-guide.md](docs/setup-guide.md) (Part 5 is
 - Starship `format` modules named explicitly are excluded from `$all`; that is how the second line stays put.
 - Sprite images need an explicit `c=2,r=1` box or the terminal stretches them.
 - herdr sees wrapper processes (not the agent under them); a `HERDR_AGENT` env hint fixes detection.
+
+## Connecting other machines
+
+`scripts/remote-setup.sh` is **user-run**. An agent may run it only with `--check` (read-only). Appending to a remote
+`~/.zshrc` or running `herdr machine add` changes a machine the user may not own, so the user does it at their own prompt.
+The agent-hint snippet it appends is the user's local, untracked file; never put its contents in this repo.
