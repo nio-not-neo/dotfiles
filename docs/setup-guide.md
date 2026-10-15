@@ -52,7 +52,14 @@ herdr integration install claude
 cd "$(chezmoi source-path)"        # `chezmoi cd` opens a subshell, so don't chain it
 scripts/pokeball-sprites.sh        # real Pokeball sprites in the prompt (else a tinted glyph)
 scripts/pokemon-bg.sh blaziken     # Ghostty background; also: deoxys | <dex 1-719> | off
+
+# 6. Optional: see agents running on other machines in the same herdr window
+herdr machine add <ssh-host> --label <name>   # asks before installing herdr on that machine
 ```
+
+Remote agents are only seen if they run in a pane of the *remote* herdr (not a plain ssh terminal), and a wrapper
+command needs `HERDR_AGENT=<engine>` set there too: see the troubleshooting table. Wrapper functions are
+machine-specific, so keep them in that machine's own untracked shell config (Part 3), never in this repo.
 
 Quit and reopen Ghostty (a config reload does not re-run the launch command). New windows attach to the herdr session.
 Check with `chezmoi verify` (silent means in sync), `starship print-config >/dev/null` (never bare `starship config`: it
@@ -163,6 +170,7 @@ the bottom of `docs/remote-workspaces.md`.
 
 | Symptom | Cause and fix |
 |---|---|
+| herdr lists some agents on a remote machine but not others | herdr only sees agents in panes of the remote herdr, and only recognises engines it knows by process name. A wrapper-launched engine needs `HERDR_AGENT=<engine>` set on that machine too (a function in its own `~/.zshrc`) |
 | herdr does not list an agent that runs through a wrapper command | herdr sees the wrapper as the foreground process. Launch it with `HERDR_AGENT=<engine>` set (for example in a shell function) |
 | herdr's sidebar shows `claude`, not the session name | Normal: it shows the agent type. The session name is the terminal title. Add a `terminal_title_stripped` row under `[ui.sidebar.agents.rows_by_agent]` |
 | herdr does not launch in a new window | `initial-command` covers only the first surface; this setup launches it from `05-herdr.zsh`. Skip it with `NO_HERDR=1 zsh` |
