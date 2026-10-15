@@ -45,8 +45,7 @@ tag_disabled = false      # also show the tag when HEAD sits on one
 style = "bold white"
 
 [git_metrics]
-# +added / -deleted lines in the working tree. Off on the remote profile: diffing a very large monorepo working
-# tree took ~700ms on every prompt there (measured with `starship timings`).
+# +added / -deleted lines in the working tree. Off on the remote profile (see the note under [git_status]).
 disabled = {{ if eq (get . "profile") "remote" }}true{{ else }}false{{ end }}
 format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
 
@@ -66,6 +65,9 @@ style = "bold green"
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
 
 [git_status]
+# Off on the remote profile together with git_metrics: scanning a very large monorepo working tree costs ~700ms
+# per prompt, and it lands on whichever git module runs first, so disabling only one just moves the cost.
+disabled = {{ if eq (get . "profile") "remote" }}true{{ else }}false{{ end }}
 conflicted = "⚔️ "
 ahead = "🏎️ 💨 ×${count} "
 behind = "🐢 ×${count} "

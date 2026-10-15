@@ -102,7 +102,10 @@ Append dated notes here as the setup teaches us something. Keep them generic.
   on every start. Rejected: the goal is for this repo to be the only source of truth. The bootstrap script now lives
   here and is run by hand, trading automatic setup of new workspaces for sole ownership.
 - 2026-10-15: first bootstrap on a workspace succeeded (company-owned files byte-identical apart from the appended
-  block). But the prompt took ~780ms to render inside a very large monorepo: `starship timings` showed one module,
-  `git_metrics` (working-tree line counts), at ~700ms. Fix: `starship.toml` is now a template that disables only that
-  module on the `remote` profile. Lesson: measure the prompt (`starship timings`) in the biggest repo on a remote
-  before calling a prompt change done; plain `git status` there took over 5s.
+  block). But the prompt took ~780ms to render inside a very large monorepo (plain `git status` there: 5s+).
+  First guess was wrong: disabling only `git_metrics` changed nothing, because the cost moved to `git_status`
+  (663ms, previously <1ms). The cost is the working-tree scan and lands on whichever git module runs first. Measured
+  A/B, with no writes to the remote, by piping a script over stdin and using process substitution for
+  `STARSHIP_CONFIG`: both modules off gave ~100-120ms. The `remote` profile now disables both (branch, commit, state
+  and worktree remain). Lessons: use `starship timings` in the biggest repo on a remote before calling a prompt
+  change done, and disable the whole family of expensive modules, not one.
