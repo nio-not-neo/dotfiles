@@ -45,7 +45,9 @@ tag_disabled = false      # also show the tag when HEAD sits on one
 style = "bold white"
 
 [git_metrics]
-disabled = false          # +added / -deleted lines in the working tree
+# +added / -deleted lines in the working tree. Off on the remote profile: diffing a very large monorepo working
+# tree took ~700ms on every prompt there (measured with `starship timings`).
+disabled = {{ if eq (get . "profile") "remote" }}true{{ else }}false{{ end }}
 format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
 
 # Linked-worktree marker, showing the repo the worktree belongs to (the directory module already shows the

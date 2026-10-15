@@ -27,7 +27,9 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). The source di
 ## Workflow
 
 - Edit the live file (`~/.config/...`), then `chezmoi re-add <file>` (tracked files) or `chezmoi add <file>`
-  (new files). Verify with `chezmoi verify`.
+  (new files). Verify with `chezmoi verify`. **Exception: templates** (`*.tmpl`, e.g. `starship.toml`) must be
+  edited with `chezmoi edit <file>`; `re-add` would flatten the template. Test both profiles with
+  `chezmoi cat --config <remote.toml> <target>`.
 - Validate before committing: `ghostty +validate-config`, `starship print-config` (never bare `starship config`:
   it opens an editor and hangs), `herdr config check`, `bash -n` on scripts.
 - Check `git log` before editing: other sessions may have committed. Don't assume the tree matches your memory.
