@@ -8,6 +8,7 @@ auto_switch = false
 agent_panel_sort = "priority"          # agents needing attention float to the top
 show_agent_labels_on_pane_borders = true
 confirm_close = true
+sidebar_width = 31                      # default is 26 columns (herdr sizes in terminal cells, not px); max stays 36
 
 [ui.toast]
 delivery = "system"                    # macOS notification when an agent finishes / needs input
