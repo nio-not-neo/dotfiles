@@ -105,6 +105,8 @@ The flow is one-way: **edit on your main machine, `git push`, then refresh the p
 - A prompt-only machine usually carries a *different* global git identity (an employer's, for instance). So an accidental
   push would almost certainly fail, but a **commit made in that clone would carry the wrong identity**. Don't commit there.
   Check what it would use: `git -C ~/.local/share/chezmoi config user.email`.
+  The bootstrap script now enforces this: it sets an invalid push URL and placeholder identity in that clone and installs
+  `pre-commit`/`pre-push` hooks that refuse, so a commit or push there fails loudly. Fetching (the refresh) still works.
 - Don't run `gh` or other forge tools there either: they may point at a different host than this repo.
 - `starship.toml` is a chezmoi template (it switches modules off per profile). Edit it with `chezmoi edit`, never
   `chezmoi re-add`, which would flatten the template. Everything else: edit the live file, then `chezmoi re-add`.

@@ -59,6 +59,22 @@ configure_profile() {
   mkdir -p "$(dirname "$cfg")" && printf '[data]\nprofile = "remote"\n' > "$cfg"
 }
 
+# Make the clone a read-only mirror: this host's global git identity is someone else's, so a commit or push made
+# here must fail loudly instead of carrying it. Repo-local only; pull/fetch (the refresh) still work.
+harden_clone() {
+  local repo="$HOME/.local/share/chezmoi" msg hook
+  [ -d "$repo/.git" ] || return 0
+  git -C "$repo" config remote.origin.pushurl "DISABLED-read-only-mirror" 2>/dev/null || true
+  git -C "$repo" config user.name "read-only-mirror" 2>/dev/null || true
+  git -C "$repo" config user.email "read-only-mirror@invalid" 2>/dev/null || true
+  msg="[personal-dotfiles] read-only mirror: edit on your main machine, push there, then refresh here."
+  for hook in pre-commit pre-push; do
+    mkdir -p "$repo/.git/hooks" 2>/dev/null || continue
+    printf '#!/bin/sh\necho "%s" >&2\nexit 1\n' "$msg" > "$repo/.git/hooks/$hook" 2>/dev/null \
+      && chmod +x "$repo/.git/hooks/$hook" 2>/dev/null || true
+  done
+}
+
 # Clone/update the personal repo and apply the allow-listed files.
 # Git is isolated from this host's global config so no work identity or credential helper is involved.
 apply_dotfiles() {
@@ -73,6 +89,8 @@ apply_dotfiles() {
     timeout 90 "$BIN/chezmoi" init --depth 1 "$PERSONAL_REPO" 2>&1 \
       || { log "first fetch failed or timed out, will retry on next start"; return 1; }
   fi
+
+  harden_clone
 
   # Guard: refuse to apply anything outside ALLOWED_FILES, whatever the repo's own ignore rules say.
   local managed extra
